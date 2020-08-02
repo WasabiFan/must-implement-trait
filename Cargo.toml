@@ -3,6 +3,11 @@ name = "must-implement-trait"
 version = "0.1.0"
 authors = ["Kaelin Laundry <wasabifan@outlook.com>"]
 edition = "2018"
+license = "MIT"
+description = "An attribute proc-macro which enforces that a type (auto-)implements a trait."
+homepage = "https://github.com/WasabiFan/must-implement-trait/"
+repository = "https://github.com/WasabiFan/must-implement-trait/"
+readme = "README.md"
 
 [lib]
 proc-macro = true
@@ -15,3 +20,5 @@ quote = "1.0"
 
 [dev-dependencies]
 trybuild = "1.0"
+# for examples/
+async-trait = "0.1.36"
