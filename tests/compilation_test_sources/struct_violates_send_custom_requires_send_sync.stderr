@@ -1,0 +1,12 @@
+error[E0277]: `(dyn NotSend + 'static)` cannot be sent between threads safely
+ --> $DIR/struct_violates_send_custom_requires_send_sync.rs:9:1
+  |
+9 | #[must_implement_trait(Send, Sync)]
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `(dyn NotSend + 'static)` cannot be sent between threads safely
+  |
+  = help: the trait `std::marker::Send` is not implemented for `(dyn NotSend + 'static)`
+  = note: required because of the requirements on the impl of `std::marker::Send` for `std::ptr::Unique<(dyn NotSend + 'static)>`
+  = note: required because it appears within the type `std::boxed::Box<(dyn NotSend + 'static)>`
+  = note: required because it appears within the type `MySendSyncStruct`
+  = help: see issue #48214
+  = note: this error originates in an attribute macro (in Nightly builds, run with -Z macro-backtrace for more info)
