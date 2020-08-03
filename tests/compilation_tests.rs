@@ -17,6 +17,7 @@ fn compilation_tests() {
 
     // Invalid usages
     tests.compile_fail(source_path("missing_param.rs"));
+    tests.compile_fail(source_path("struct_generics.rs"));
 
     // Basic true positives
     tests.compile_fail(source_path(
@@ -37,4 +38,5 @@ fn compilation_tests() {
     tests.pass(source_path(
         "struct_implements_traits_separate_attributes.rs",
     ));
+    tests.pass(source_path("struct_where_no_generics.rs"));
 }

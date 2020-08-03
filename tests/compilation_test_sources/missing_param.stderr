@@ -1,4 +1,4 @@
-error: unexpected end of input, expected at least one trait name as an argument; none provided.
+error: expected at least one trait name as an argument; none provided.
  --> $DIR/missing_param.rs:5:1
   |
 5 | #[must_implement_trait]

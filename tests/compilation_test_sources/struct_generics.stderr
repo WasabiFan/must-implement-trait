@@ -1,0 +1,13 @@
+error: must_implement_trait does not currently support types with generic parameters.
+ --> $DIR/struct_generics.rs:7:1
+  |
+7 | #[must_implement_trait(Send)]
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: this error originates in an attribute macro (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0422]: cannot find struct, variant or union type `MySendStruct` in this scope
+ --> $DIR/struct_generics.rs:4:21
+  |
+4 |     let _instance = MySendStruct { value: 7 };
+  |                     ^^^^^^^^^^^^ not found in this scope

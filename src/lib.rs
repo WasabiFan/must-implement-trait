@@ -27,7 +27,10 @@ impl Parse for Args {
         let traits = Punctuated::<Ident, Token![,]>::parse_terminated(input)?;
 
         if traits.is_empty() {
-            Err(input.error("expected at least one trait name as an argument; none provided."))
+            Err(syn::Error::new(
+                input.span(),
+                "expected at least one trait name as an argument; none provided.",
+            ))
         } else {
             Ok(Args {
                 traits: traits.into_iter().collect(),
@@ -40,14 +43,22 @@ impl Parse for TargetItem {
     fn parse(input: ParseStream) -> Result<Self> {
         let item = Item::parse(input)?;
         match &item {
-            Item::Struct(s) => Ok(TargetItem {
+            Item::Struct(s) if s.generics.params.is_empty() => Ok(TargetItem {
                 ident: s.ident.clone(),
                 item_impl: TargetItemImpl::Struct(s.clone()),
             }),
-            Item::Enum(e) => Ok(TargetItem {
+            Item::Struct(_) => Err(syn::Error::new(
+                input.span(),
+                "must_implement_trait does not currently support types with generic parameters.",
+            )),
+            Item::Enum(e) if e.generics.params.is_empty() => Ok(TargetItem {
                 ident: e.ident.clone(),
                 item_impl: TargetItemImpl::Enum(e.clone()),
             }),
+            Item::Enum(_) => Err(syn::Error::new(
+                input.span(),
+                "must_implement_trait does not currently support types with generic parameters.",
+            )),
             _ => Err(input.error("must_implement_trait can only be used on structs and enums.")),
         }
     }
@@ -83,7 +94,6 @@ pub fn must_implement_trait(attr_tokens: TokenStream, item_tokens: TokenStream) 
         shim_trait_id
     );
 
-    // TODO: would quote_spanned! improve diagnostics?
     let updated_syntax = quote! {
         #item_declaration
         struct #shim_ident where #ident_str: #(#traits)+*;
