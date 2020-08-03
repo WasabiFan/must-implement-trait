@@ -1,0 +1,10 @@
+error[E0277]: `std::rc::Rc<i32>` cannot be sent between threads safely
+ --> $DIR/struct_violates_trait_derives_after_must_implement.rs:9:1
+  |
+9 | #[must_implement_trait(Send)]
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `std::rc::Rc<i32>` cannot be sent between threads safely
+  |
+  = help: within `MySendStruct`, the trait `std::marker::Send` is not implemented for `std::rc::Rc<i32>`
+  = note: required because it appears within the type `MySendStruct`
+  = help: see issue #48214
+  = note: this error originates in an attribute macro (in Nightly builds, run with -Z macro-backtrace for more info)
