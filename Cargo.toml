@@ -10,6 +10,11 @@ repository = "https://github.com/WasabiFan/must-implement-trait/"
 readme = "README.md"
 categories = ["development-tools"]
 keywords = ["proc-macro", "auto-trait"]
+include = [
+    "Cargo.toml",
+    "README.md",
+    "src/**/*.rs"
+]
 
 [lib]
 proc-macro = true
