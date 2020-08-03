@@ -34,4 +34,7 @@ fn compilation_tests() {
     tests.compile_fail(source_path(
         "struct_violates_trait_derives_after_must_implement.rs",
     ));
+    tests.pass(source_path(
+        "struct_implements_traits_separate_attributes.rs",
+    ));
 }

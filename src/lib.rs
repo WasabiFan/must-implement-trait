@@ -1,4 +1,5 @@
 use proc_macro::TokenStream;
+use proc_macro2::Span;
 use quote::{format_ident, quote, ToTokens};
 use syn::{
     parse::{Parse, ParseStream},
@@ -70,8 +71,17 @@ pub fn must_implement_trait(attr_tokens: TokenStream, item_tokens: TokenStream) 
     let item_declaration = item.item_impl;
     let traits = &args.traits;
 
-    // TODO: handle using attribute twice
-    let shim_ident = format_ident!("_MustImplementTraitGadget{}", item.ident);
+    let trait_names = args
+        .traits
+        .iter()
+        .map(|t| t.to_string())
+        .collect::<Vec<String>>();
+    let shim_trait_id = syn::Ident::new(&trait_names.join(""), Span::call_site());
+    let shim_ident = format_ident!(
+        "_MustImplementTraitGadget{}For{}",
+        item.ident,
+        shim_trait_id
+    );
 
     // TODO: would quote_spanned! improve diagnostics?
     let updated_syntax = quote! {
