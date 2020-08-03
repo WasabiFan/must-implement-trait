@@ -1,6 +1,7 @@
 # must-implement-trait
+![CI Badge](https://github.com/WasabiFan/must-implement-trait/workflows/Rust/badge.svg)
 
-An attribute proc-macro which enforces that a type (auto-)implements a trait.
+An attribute proc-macro which enforces that a type (auto-)implements the specified trait(s).
 
 ## Usage
 
